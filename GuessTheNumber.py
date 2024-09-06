@@ -1,7 +1,7 @@
 import random
 
 # 当前版本号
-current_version = "v0.0.3"
+current_version = "v0.0.4"
 developer_password = "devmodepwd"
 
 def display_version():
