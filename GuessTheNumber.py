@@ -1,59 +1,70 @@
-import random
 import requests
-import zipfile
+import random
 import os
+import subprocess
+
+# GitHub API 配置
+github_token = "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"  # 你的 GitHub 个人访问令牌
+private_repo_api_url = "https://api.github.com/repos/ANDYzytnb/GuessTheNumber/releases/latest"
+public_repo_base_url = "https://github.com/ANDYzytnb/GuessTheNumberPublicDownloadAPI/releases/download"
 
 # 当前版本号
-current_version = "v1.0.0"
-developer_password = "devmodepwd"
-github_token = "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"  # 将这里替换为你的 GitHub 个人访问令牌
+current_version = "v1.0.1"
 
-def display_version():
-    print(f"当前版本：{current_version}")
-
-def check_for_update():
-    api_url = "https://api.github.com/repos/ANDYzytnb/GuessTheNumber/releases/latest"
-    
-    headers = {
-        'Authorization': f'token {github_token}'
-    }
-    
+def get_latest_version():
+    """
+    从主私有仓库获取最新版本号。
+    """
+    headers = {'Authorization': f'token {github_token}'}
     try:
-        response = requests.get(api_url, headers=headers)
+        response = requests.get(private_repo_api_url, headers=headers)
         response.raise_for_status()
         latest_release = response.json()
-        latest_version = latest_release['tag_name']
-        
-        if latest_version != current_version:
-            download_url = latest_release['assets'][0]['browser_download_url']
-            print(f"发现更新: {latest_version}")
-            download_and_install_update(download_url)
-        else:
-            print("当前已经是最新版本。")
+        return latest_release['tag_name']
     except Exception as e:
         print(f"检查更新时发生错误: {e}")
+        return None
 
-def download_and_install_update(download_url):
+def download_update(latest_version):
+    """
+    从公共仓库下载更新文件。
+    """
+    download_url = f"{public_repo_base_url}/{latest_version}/GuessTheNumber-{latest_version}.exe"
     try:
-        headers = {
-            'Authorization': f'token {github_token}'
-        }
-        response = requests.get(download_url, headers=headers, stream=True)
+        response = requests.get(download_url, stream=True)
         response.raise_for_status()
-
-        filename = "update.zip"
+        
+        filename = f"GuessTheNumber-{latest_version}.exe"
         with open(filename, 'wb') as file:
             for chunk in response.iter_content(chunk_size=8192):
                 file.write(chunk)
         
-        print("下载完成。正在安装更新...")
-        with zipfile.ZipFile(filename, 'r') as zip_ref:
-            zip_ref.extractall(".")
-        
-        print("更新完成。请重启应用程序。")
-        os.remove(filename)  # 删除更新文件
+        print(f"更新下载完成: {filename}")
+        return filename
     except Exception as e:
-        print(f"下载或安装更新时发生错误: {e}")
+        print(f"下载更新时发生错误: {e}")
+        return None
+
+def check_for_update():
+    """
+    检查是否有更新，并下载更新（如果有的话）。
+    """
+    latest_version = get_latest_version()
+    
+    if latest_version:
+        if latest_version != current_version:
+            print(f"发现更新: {latest_version}")
+            new_file = download_update(latest_version)
+            if new_file:
+                print(f"即将启动新版本: {new_file}")
+                # 启动新版本
+                subprocess.Popen(new_file, close_fds=True)
+                return True
+        else:
+            print("当前已经是最新版本。")
+    else:
+        print("无法获取最新版本信息。")
+    return False
 
 def guess_number(min_range, max_range, number_to_guess=None, developer_mode=False, limit_attempts=None):
     if developer_mode:
@@ -166,7 +177,10 @@ def enable_limit_attempts():
             print("请输入有效的选项 (y/n)！")
 
 def play_game():
-    check_for_update()  # 检查更新
+    update_success = check_for_update()  # 检查更新
+    if update_success:
+        return  # 退出当前程序
+    
     display_version()  # 显示当前版本号
     while True:
         min_range, max_range, developer_mode, number_to_guess = select_difficulty()
@@ -178,5 +192,10 @@ def play_game():
             print("感谢参与，再见！")
             break
 
-# 开始游戏
-play_game()
+# 显示当前版本号
+def display_version():
+    print(f"当前版本：{current_version}")
+
+# 运行游戏
+if __name__ == "__main__":
+    play_game()
