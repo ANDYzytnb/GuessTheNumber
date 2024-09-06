@@ -66,7 +66,7 @@ def select_difficulty():
             elif choice == 3:
                 return 0, 5000, False, None
             elif choice == 4:
-                return custom_range(), False, None
+                return *custom_range(), False, None  # 解包custom_range返回的两个值，并添加额外两个值
             elif choice == 9:
                 return developer_mode()
             else:
@@ -81,7 +81,7 @@ def custom_range():
             min_range = int(input("请输入自定义最小值："))
             max_range = int(input("请输入自定义最大值（最大不超过500000）："))
             if min_range >= 0 and max_range <= 500000 and min_range < max_range:
-                return min_range, max_range
+                return min_range, max_range  # 返回两个值
             else:
                 print("请确保最小值大于等于0，最大值小于等于500000，且最小值小于最大值。")
         except ValueError:
