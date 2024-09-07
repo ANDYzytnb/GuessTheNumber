@@ -9,7 +9,7 @@ private_repo_api_url = "https://api.github.com/repos/ANDYzytnb/GuessTheNumber/re
 public_repo_base_url = "https://github.com/ANDYzytnb/GuessTheNumberPublicDownloadAPI/releases/download"
 
 # 当前版本号
-current_version = "v1.0.2"
+current_version = "v1.0.3"
 developer_password = "devmodepwd"
 
 def get_latest_version():
@@ -128,7 +128,7 @@ def select_difficulty():
             elif choice == 4:
                 return *custom_range(), False, None
             elif choice == 9:
-                return developer_mode()
+                return developer_mode()  # 进入开发者模式
             else:
                 print("请输入有效的数字 (1-4)！")
         except ValueError:
@@ -152,13 +152,13 @@ def developer_mode():
         password = input("请输入开发者密码：")
         if password == developer_password:
             print("密码正确，进入开发者模式。")
-            min_range = 0
-            max_range = 100
+            min_range, max_range = custom_range()  # 让用户自定义范围
             number_to_guess = random.randint(min_range, max_range)
 
             # 进入开发者模式后显示当前版本信息和OTA请求信息
             print(f"当前版本：{current_version}")
             print(f"OTA请求URL：{private_repo_api_url}")
+            print(f"开发者模式提示：正确的数字是 {number_to_guess}")
             return min_range, max_range, True, number_to_guess
         else:
             print("密码错误，请重新输入。")
