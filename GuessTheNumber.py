@@ -1,64 +1,66 @@
 import requests
+import base64
 import random
 import os
 import subprocess
 
 # GitHub API 配置
-github_token = "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"  # 你的 GitHub 个人访问令牌
+github_token = "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"  # 替换为你的 GitHub 访问令牌
+password_file_url = "https://api.github.com/repos/ANDYzytnb/GuessTheNumberDeveloperPasswordAPI/contents/password.txt"
 private_repo_api_url = "https://api.github.com/repos/ANDYzytnb/GuessTheNumber/releases/latest"
 public_repo_base_url = "https://github.com/ANDYzytnb/GuessTheNumberPublicDownloadAPI/releases/download"
+current_version = "v1.0.4"
 
-# 当前版本号
-current_version = "v1.0.3"
-developer_password = "devmodepwd"
+def get_password_from_github():
+    print("正在请求开发者密码...")
+    headers = {'Authorization': f'token {github_token}'}
+    try:
+        response = requests.get(password_file_url, headers=headers)
+        response.raise_for_status()
+        file_content = response.json()
+        password_encoded = file_content['content']
+        password_decoded = base64.b64decode(password_encoded).decode('utf-8').strip()
+        return password_decoded
+    except requests.exceptions.RequestException as e:
+        print(f"获取开发者密码时发生错误: {e}")
+        return None
 
 def get_latest_version():
-    """
-    从主私有仓库获取最新版本号。
-    """
+    print("正在检查更新...")
     headers = {'Authorization': f'token {github_token}'}
     try:
         response = requests.get(private_repo_api_url, headers=headers)
         response.raise_for_status()
         latest_release = response.json()
         return latest_release['tag_name']
-    except Exception as e:
+    except requests.exceptions.RequestException as e:
         print(f"检查更新时发生错误: {e}")
         return None
 
 def download_update(latest_version):
-    """
-    从公共仓库下载更新文件。
-    """
+    print("正在下载更新...")
     download_url = f"{public_repo_base_url}/{latest_version}/GuessTheNumber-{latest_version}.exe"
     try:
         response = requests.get(download_url, stream=True)
         response.raise_for_status()
-        
         filename = f"GuessTheNumber-{latest_version}.exe"
         with open(filename, 'wb') as file:
             for chunk in response.iter_content(chunk_size=8192):
                 file.write(chunk)
-        
         print(f"更新下载完成: {filename}")
         return filename
-    except Exception as e:
+    except requests.exceptions.RequestException as e:
         print(f"下载更新时发生错误: {e}")
         return None
 
 def check_for_update():
-    """
-    检查是否有更新，并下载更新（如果有的话）。
-    """
     latest_version = get_latest_version()
-    
     if latest_version:
         if latest_version != current_version:
             print(f"发现更新: {latest_version}")
             new_file = download_update(latest_version)
             if new_file:
                 print(f"即将启动新版本: {new_file}")
-                # 启动新版本
                 subprocess.Popen(new_file, close_fds=True)
                 return True
         else:
@@ -76,7 +78,6 @@ def guess_number(min_range, max_range, number_to_guess=None, developer_mode=Fals
     print(f"欢迎来到猜数字游戏！我已经在{min_range}到{max_range}之间选择了一个数字，快来猜猜看吧！")
     
     attempts = 0
-
     while True:
         if limit_attempts is not None:
             if attempts >= limit_attempts:
@@ -128,7 +129,19 @@ def select_difficulty():
             elif choice == 4:
                 return *custom_range(), False, None
             elif choice == 9:
-                return developer_mode()  # 进入开发者模式
+                password = input("请输入开发者密码：")  # 先让用户输入密码，再请求
+                correct_password = get_password_from_github()  # 请求 GitHub 密码
+                if correct_password and password == correct_password:
+                    print("密码正确，进入开发者模式。")
+                    min_range, max_range = custom_range()  # 让用户自定义范围
+                    number_to_guess = random.randint(min_range, max_range)
+                    print(f"当前版本：{current_version}")
+                    print(f"OTA 请求 URL：{private_repo_api_url}")
+                    print(f"开发者模式提示：正确的数字是 {number_to_guess}")
+                    return min_range, max_range, True, number_to_guess
+                else:
+                    print("密码错误，回到普通模式。")
+                    return (0, 0, False, None)  # 返回普通模式默认值
             else:
                 print("请输入有效的数字 (1-4)！")
         except ValueError:
@@ -146,22 +159,6 @@ def custom_range():
                 print("请确保最小值大于等于0，最大值小于等于500000，且最小值小于最大值。")
         except ValueError:
             print("请输入有效的整数！")
-
-def developer_mode():
-    while True:
-        password = input("请输入开发者密码：")
-        if password == developer_password:
-            print("密码正确，进入开发者模式。")
-            min_range, max_range = custom_range()  # 让用户自定义范围
-            number_to_guess = random.randint(min_range, max_range)
-
-            # 进入开发者模式后显示当前版本信息和OTA请求信息
-            print(f"当前版本：{current_version}")
-            print(f"OTA请求URL：{private_repo_api_url}")
-            print(f"开发者模式提示：正确的数字是 {number_to_guess}")
-            return min_range, max_range, True, number_to_guess
-        else:
-            print("密码错误，请重新输入。")
 
 def enable_limit_attempts():
     while True:
@@ -189,6 +186,10 @@ def play_game():
     display_version()  # 显示当前版本号
     while True:
         min_range, max_range, developer_mode, number_to_guess = select_difficulty()
+        if min_range is None:  # 捕捉到无法进入开发者模式的情况
+            print("无法继续游戏。")
+            return
+        
         limit_attempts = enable_limit_attempts()
         guess_number(min_range, max_range, number_to_guess, developer_mode, limit_attempts)
         
