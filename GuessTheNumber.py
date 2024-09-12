@@ -7,11 +7,12 @@ import os
 # GitHub API 配置
 public_repo_api_url = "https://api.github.com/repos/ANDYzytnb/GuessTheNumberPublicDownloadAPI/releases/latest"
 public_repo_base_url = "https://github.com/ANDYzytnb/GuessTheNumberPublicDownloadAPI/releases/download"
-current_version = "v2.0.0"
+current_version = "v2.0.2"
 
 # 开发者模式密码
 dev_mode_password = "devmodepwd"
 
+# 获取最新版本
 def get_latest_version():
     print("正在检查更新...")
     try:
@@ -23,6 +24,7 @@ def get_latest_version():
         print(f"检查更新时发生错误: {e}")
         return None
 
+# 下载更新
 def download_update(latest_version):
     print("正在下载更新...")
     download_url = f"{public_repo_base_url}/{latest_version}/GuessTheNumber-{latest_version}.exe"
@@ -39,6 +41,7 @@ def download_update(latest_version):
         print(f"下载更新时发生错误: {e}")
         return None
 
+# 检查更新
 def check_for_update():
     latest_version = get_latest_version()
     if latest_version:
@@ -55,24 +58,30 @@ def check_for_update():
         print("无法获取最新版本信息。")
     return False
 
+# 清除控制台输出（跨平台处理）
 def clear_console():
-    """根据操作系统清空控制台"""
-    if os.name == 'nt':  # Windows
-        os.system('cls')
-    else:  # macOS and Linux
-        os.system('clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
 
+# 挑战模式逻辑
+def challenge_mode_prompt():
+    print("请输入：", end="")
+    try:
+        guess = int(input())  # 保留 '请输入：' 提示，不清除
+        return guess
+    except ValueError:
+        print("请输入一个有效的整数！")
+        return None
+
+# 猜数字游戏主函数
 def guess_number(min_range, max_range, number_to_guess=None, developer_mode=False, limit_attempts=None, challenge_mode=False):
     if developer_mode:
         print(f"开发者模式已启用。正确的数字是 {number_to_guess}。")
     else:
         number_to_guess = random.randint(min_range, max_range)
     
-    if challenge_mode:
-        print(f"欢迎来到挑战模式！我已经在{min_range}到{max_range}之间选择了一个数字，快来猜猜看吧！")
-    else:
+    if not challenge_mode:
         print(f"欢迎来到猜数字游戏！我已经在{min_range}到{max_range}之间选择了一个数字，快来猜猜看吧！")
-
+    
     attempts = 0
     while True:
         if limit_attempts is not None:
@@ -84,19 +93,23 @@ def guess_number(min_range, max_range, number_to_guess=None, developer_mode=Fals
                 break
             print(f"你还有 {limit_attempts - attempts} 次猜测机会。")
         
-        try:
-            guess = int(input("请输入："))  # 用户输入猜测
-            clear_console()  # 清除输入行
-        except ValueError:
-            print("请输入一个有效的整数！")
-            time.sleep(1)
-            clear_console()  # 清除提示行
-            continue
+        # 挑战模式输入处理
+        if challenge_mode:
+            guess = challenge_mode_prompt()
+            if guess is None:
+                continue
+        else:
+            try:
+                guess = int(input(f"请输入你猜的数字（{min_range}-{max_range}）："))
+            except ValueError:
+                print("请输入一个有效的整数！")
+                continue
         
         if guess < min_range or guess > max_range:
             print(f"你的输入超出了当前范围，请输入{min_range}到{max_range}之间的数字。")
-            time.sleep(1)
-            clear_console()  # 清除提示行
+            time.sleep(1)  # 停顿1秒
+            clear_console()  # 清除信息
+            print("Developer: https://github.com/ANDYzytnb")
             continue
         
         attempts += 1
@@ -105,21 +118,33 @@ def guess_number(min_range, max_range, number_to_guess=None, developer_mode=Fals
             print("恭喜你，猜对了！Game Over!")
             break
         elif guess < number_to_guess:
-            print("太小了！")
+            min_range = guess
+            if challenge_mode:
+                print("太小了！")
+            else:
+                print(f"你猜的数字在 {min_range} 到 {max_range} 之间。")
         else:
-            print("太大了！")
+            max_range = guess
+            if challenge_mode:
+                print("太大了！")
+            else:
+                print(f"你猜的数字在 {min_range} 到 {max_range} 之间。")
+        
+        # 在挑战模式下，显示 1 秒后清除提示并重新显示输入框
+        if challenge_mode:
+            time.sleep(1)  # 停顿1秒
+            clear_console()  # 清除提示信息
+            print("Developer: https://github.com/ANDYzytnb")
 
-        time.sleep(1)  # 提示显示1秒钟
-        clear_console()  # 清除提示
-
+# 选择难度模式
 def select_difficulty():
     print("请选择难度模式：")
     print("1. 简单模式 (0-100)")
     print("2. 中等模式 (0-500)")
     print("3. 困难模式 (0-5000)")
     print("4. 自定义模式 (自定义范围，最大可为0-500000)")
-    print("5. 挑战模式 (0-10000)")
-
+    print("5. 挑战模式 (0-10000，仅显示提示1秒)")
+    
     while True:
         try:
             choice = int(input("请输入难度选择 (1-5)："))
@@ -132,7 +157,7 @@ def select_difficulty():
             elif choice == 4:
                 return *custom_range(), False, None, False
             elif choice == 5:
-                return 0, 10000, False, None, True  # 挑战模式范围是0到10000
+                return 0, 10000, False, None, True
             elif choice == 9:
                 password = input("请输入开发者密码：")
                 if password == dev_mode_password:
@@ -151,6 +176,7 @@ def select_difficulty():
         except ValueError:
             print("请输入有效的整数！")
 
+# 自定义范围模式
 def custom_range():
     print("你已选择自定义模式，最大范围可为0到500000。")
     while True:
@@ -164,6 +190,7 @@ def custom_range():
         except ValueError:
             print("请输入有效的整数！")
 
+# 限制猜测次数功能
 def enable_limit_attempts():
     while True:
         enable_limit = input("你想开启限制猜测次数功能吗？(y/n)：").lower()
@@ -182,19 +209,20 @@ def enable_limit_attempts():
         else:
             print("请输入有效的选项 (y/n)！")
 
+# 主游戏运行函数
 def play_game():
-    update_success = check_for_update()  # 检查更新
+    update_success = check_for_update()
     if update_success:
         return  # 退出当前程序
     
-    display_version()  # 显示当前版本号
+    display_version()
     while True:
         min_range, max_range, developer_mode, number_to_guess, challenge_mode = select_difficulty()
-        if min_range is None:
+        if min_range is None:  # 捕捉到无法进入开发者模式的情况
             print("无法继续游戏。")
             return
         
-        limit_attempts = enable_limit_attempts() if not challenge_mode else None
+        limit_attempts = enable_limit_attempts()
         guess_number(min_range, max_range, number_to_guess, developer_mode, limit_attempts, challenge_mode)
         
         replay = input("你想再玩一次吗？(y/n)：").lower()
