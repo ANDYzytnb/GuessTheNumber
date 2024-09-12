@@ -1,6 +1,8 @@
 import requests
 import random
 import subprocess
+import time
+import os
 
 # GitHub API 配置
 public_repo_api_url = "https://api.github.com/repos/ANDYzytnb/GuessTheNumberPublicDownloadAPI/releases/latest"
@@ -53,14 +55,24 @@ def check_for_update():
         print("无法获取最新版本信息。")
     return False
 
-def guess_number(min_range, max_range, number_to_guess=None, developer_mode=False, limit_attempts=None):
+def clear_console():
+    """根据操作系统清空控制台"""
+    if os.name == 'nt':  # Windows
+        os.system('cls')
+    else:  # macOS and Linux
+        os.system('clear')
+
+def guess_number(min_range, max_range, number_to_guess=None, developer_mode=False, limit_attempts=None, challenge_mode=False):
     if developer_mode:
         print(f"开发者模式已启用。正确的数字是 {number_to_guess}。")
     else:
         number_to_guess = random.randint(min_range, max_range)
     
-    print(f"欢迎来到猜数字游戏！我已经在{min_range}到{max_range}之间选择了一个数字，快来猜猜看吧！")
-    
+    if challenge_mode:
+        print(f"欢迎来到挑战模式！我已经在{min_range}到{max_range}之间选择了一个数字，快来猜猜看吧！")
+    else:
+        print(f"欢迎来到猜数字游戏！我已经在{min_range}到{max_range}之间选择了一个数字，快来猜猜看吧！")
+
     attempts = 0
     while True:
         if limit_attempts is not None:
@@ -73,13 +85,18 @@ def guess_number(min_range, max_range, number_to_guess=None, developer_mode=Fals
             print(f"你还有 {limit_attempts - attempts} 次猜测机会。")
         
         try:
-            guess = int(input(f"请输入你猜的数字（{min_range}-{max_range}）："))
+            guess = int(input("请输入："))  # 用户输入猜测
+            clear_console()  # 清除输入行
         except ValueError:
             print("请输入一个有效的整数！")
+            time.sleep(1)
+            clear_console()  # 清除提示行
             continue
         
         if guess < min_range or guess > max_range:
             print(f"你的输入超出了当前范围，请输入{min_range}到{max_range}之间的数字。")
+            time.sleep(1)
+            clear_console()  # 清除提示行
             continue
         
         attempts += 1
@@ -88,11 +105,12 @@ def guess_number(min_range, max_range, number_to_guess=None, developer_mode=Fals
             print("恭喜你，猜对了！Game Over!")
             break
         elif guess < number_to_guess:
-            min_range = guess
-            print(f"你猜的数字在 {min_range} 到 {max_range} 之间。")
+            print("太小了！")
         else:
-            max_range = guess
-            print(f"你猜的数字在 {min_range} 到 {max_range} 之间。")
+            print("太大了！")
+
+        time.sleep(1)  # 提示显示1秒钟
+        clear_console()  # 清除提示
 
 def select_difficulty():
     print("请选择难度模式：")
@@ -100,33 +118,36 @@ def select_difficulty():
     print("2. 中等模式 (0-500)")
     print("3. 困难模式 (0-5000)")
     print("4. 自定义模式 (自定义范围，最大可为0-500000)")
-    
+    print("5. 挑战模式 (0-10000)")
+
     while True:
         try:
-            choice = int(input("请输入难度选择 (1-4)："))
+            choice = int(input("请输入难度选择 (1-5)："))
             if choice == 1:
-                return 0, 100, False, None
+                return 0, 100, False, None, False
             elif choice == 2:
-                return 0, 500, False, None
+                return 0, 500, False, None, False
             elif choice == 3:
-                return 0, 5000, False, None
+                return 0, 5000, False, None, False
             elif choice == 4:
-                return *custom_range(), False, None
+                return *custom_range(), False, None, False
+            elif choice == 5:
+                return 0, 10000, False, None, True  # 挑战模式范围是0到10000
             elif choice == 9:
-                password = input("请输入开发者密码：")  # 先让用户输入密码
+                password = input("请输入开发者密码：")
                 if password == dev_mode_password:
                     print("密码正确，进入开发者模式。")
-                    min_range, max_range = custom_range()  # 让用户自定义范围
+                    min_range, max_range = custom_range()
                     number_to_guess = random.randint(min_range, max_range)
                     print(f"当前版本：{current_version}")
                     print(f"OTA 请求 URL：{public_repo_api_url}")
                     print(f"开发者模式提示：正确的数字是 {number_to_guess}")
-                    return min_range, max_range, True, number_to_guess
+                    return min_range, max_range, True, number_to_guess, False
                 else:
                     print("密码错误，回到普通模式。")
-                    return (0, 0, False, None)  # 返回普通模式默认值
+                    return (0, 0, False, None, False)
             else:
-                print("请输入有效的数字 (1-4)！")
+                print("请输入有效的数字 (1-5)！")
         except ValueError:
             print("请输入有效的整数！")
 
@@ -168,13 +189,13 @@ def play_game():
     
     display_version()  # 显示当前版本号
     while True:
-        min_range, max_range, developer_mode, number_to_guess = select_difficulty()
-        if min_range is None:  # 捕捉到无法进入开发者模式的情况
+        min_range, max_range, developer_mode, number_to_guess, challenge_mode = select_difficulty()
+        if min_range is None:
             print("无法继续游戏。")
             return
         
-        limit_attempts = enable_limit_attempts()
-        guess_number(min_range, max_range, number_to_guess, developer_mode, limit_attempts)
+        limit_attempts = enable_limit_attempts() if not challenge_mode else None
+        guess_number(min_range, max_range, number_to_guess, developer_mode, limit_attempts, challenge_mode)
         
         replay = input("你想再玩一次吗？(y/n)：").lower()
         if replay != 'y':
