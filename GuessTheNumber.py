@@ -7,7 +7,8 @@ import os
 # GitHub API 配置
 public_repo_api_url = "https://api.github.com/repos/ANDYzytnb/GuessTheNumberPublicDownloadAPI/releases/latest"
 public_repo_base_url = "https://github.com/ANDYzytnb/GuessTheNumberPublicDownloadAPI/releases/download"
-current_version = "v2.0.2"
+announcement_url = "https://raw.githubusercontent.com/ANDYzytnb/GuessTheNumberPublicDownloadAPI/main/announcement.txt"
+current_version = "v2.0.3"
 
 # 开发者模式密码
 dev_mode_password = "devmodepwd"
@@ -57,6 +58,17 @@ def check_for_update():
     else:
         print("无法获取最新版本信息。")
     return False
+
+# 显示公告
+def display_announcement():
+    print("\n游戏公告：")
+    try:
+        response = requests.get(announcement_url)
+        response.raise_for_status()
+        announcement = response.text
+        print(announcement)
+    except requests.exceptions.RequestException as e:
+        print(f"获取公告时发生错误: {e}")
 
 # 清除控制台输出（跨平台处理）
 def clear_console():
@@ -209,13 +221,19 @@ def enable_limit_attempts():
         else:
             print("请输入有效的选项 (y/n)！")
 
+# 显示当前版本号
+def display_version():
+    print(f"当前版本：{current_version}")
+
 # 主游戏运行函数
 def play_game():
     update_success = check_for_update()
     if update_success:
-        return  # 退出当前程序
+        return  # 如果更新成功，停止运行当前版本
     
     display_version()
+    display_announcement()
+    
     while True:
         min_range, max_range, developer_mode, number_to_guess, challenge_mode = select_difficulty()
         if min_range is None:  # 捕捉到无法进入开发者模式的情况
@@ -229,10 +247,6 @@ def play_game():
         if replay != 'y':
             print("感谢参与，再见！")
             break
-
-# 显示当前版本号
-def display_version():
-    print(f"当前版本：{current_version}")
 
 # 运行游戏
 if __name__ == "__main__":
