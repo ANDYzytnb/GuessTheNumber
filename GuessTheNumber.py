@@ -4,11 +4,11 @@ import subprocess
 import time
 import os
 
-# GitHub API 配置
-public_repo_api_url = "https://api.github.com/repos/ANDYzytnb/GuessTheNumberPublicDownloadAPI/releases/latest"
-public_repo_base_url = "https://github.com/ANDYzytnb/GuessTheNumberPublicDownloadAPI/releases/download"
-announcement_url = "https://raw.githubusercontent.com/ANDYzytnb/GuessTheNumberPublicDownloadAPI/main/announcement.txt"
-current_version = "v2.0.3"
+# 新的 GitHub API 配置
+public_repo_api_url = "https://api.github.com/repos/ANDYzytnb/GuessTheNumber/releases/latest"
+public_repo_base_url = "https://github.com/ANDYzytnb/GuessTheNumber/releases/download"
+announcement_url = "https://raw.githubusercontent.com/ANDYzytnb/GuessTheNumber/main/announcement.txt"
+current_version = "v2.0.4"
 
 # 开发者模式密码
 dev_mode_password = "devmodepwd"
@@ -231,23 +231,13 @@ def play_game():
     if update_success:
         return  # 如果更新成功，停止运行当前版本
     
-    display_version()
     display_announcement()
-    
-    while True:
-        min_range, max_range, developer_mode, number_to_guess, challenge_mode = select_difficulty()
-        if min_range is None:  # 捕捉到无法进入开发者模式的情况
-            print("无法继续游戏。")
-            return
-        
-        limit_attempts = enable_limit_attempts()
-        guess_number(min_range, max_range, number_to_guess, developer_mode, limit_attempts, challenge_mode)
-        
-        replay = input("你想再玩一次吗？(y/n)：").lower()
-        if replay != 'y':
-            print("感谢参与，再见！")
-            break
 
-# 运行游戏
+    min_range, max_range, developer_mode, number_to_guess, challenge_mode = select_difficulty()
+    limit_attempts = enable_limit_attempts()
+    
+    guess_number(min_range, max_range, number_to_guess, developer_mode, limit_attempts, challenge_mode)
+
+# 启动游戏
 if __name__ == "__main__":
     play_game()
