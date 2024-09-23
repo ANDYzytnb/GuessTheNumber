@@ -8,7 +8,7 @@ import os
 public_repo_api_url = "https://api.github.com/repos/ANDYzytnb/GuessTheNumber/releases/latest"
 public_repo_base_url = "https://github.com/ANDYzytnb/GuessTheNumber/releases/download"
 announcement_url = "https://raw.githubusercontent.com/ANDYzytnb/GuessTheNumber/main/announcement.txt"
-current_version = "v2.0.4.1"
+current_version = "v2.0.5"
 
 # 开发者模式密码
 dev_mode_password = "devmodepwd"
