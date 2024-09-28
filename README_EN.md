@@ -12,7 +12,8 @@ Thank you for your interest in and use of this project! As open-source software,
 
 **Thank you for your understanding and support! Let’s work together to promote the spirit of open source.**
 
-## Additional Information:
+## Additional Information
+
 1. It is recommended to use version 2.0.4 or above for the best support.
 
 2. The project started on 2024-09-06.
@@ -20,3 +21,7 @@ Thank you for your interest in and use of this project! As open-source software,
 3. The project was open-sourced on 2024-09-23.
 
 4. Initially, this project was started due to school tasks. After many updates, it was decided to change the project to a public open source project.
+
+## About MacOS
+
+I can't provide support for MacOS for now. If you really want to try it, you can try to create a fork. Use the Debug feature of Codespaces in your fork.
