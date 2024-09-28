@@ -12,7 +12,8 @@ Merci de votre intérêt et de votre utilisation de ce projet ! En tant que logi
 
 **Merci de votre compréhension et de votre soutien ! Travaillons ensemble pour promouvoir l'esprit de l'open source.**
 
-## Informations supplémentaires :
+## Informations supplémentaires
+
 1. Il est recommandé d'utiliser la version 2.0.4 ou supérieure pour bénéficier du meilleur support.
 
 2. Le projet a commencé le 2024-09-06.
@@ -20,3 +21,7 @@ Merci de votre intérêt et de votre utilisation de ce projet ! En tant que logi
 3. Le projet a été mis en open-source le 2024-09-23.
 
 4. Ce projet a été lancé à l'origine en raison de la mission de l'école. Après de nombreuses mises à jour, nous avons décidé de changer le projet en un projet open source public.
+
+## À propos de MacOS
+
+Je ne peux pas fournir de support pour MacOS pour le moment. Si vous voulez vraiment l'essayer, vous pouvez essayer de créer un fork. Utilisez la fonction Debug de Codespaces dans votre fork.
