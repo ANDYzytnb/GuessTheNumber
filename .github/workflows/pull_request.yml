@@ -1,0 +1,49 @@
+name: Security Check for Malicious Code
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  bandit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install Bandit
+        run: pip install bandit
+
+      - name: Run Bandit
+        id: bandit
+        run: |
+          bandit -r . -f json > bandit_report.json || true
+          if grep -q '"issue"' bandit_report.json; then
+            echo "Malicious code detected!"
+            exit 1
+          else
+            echo "No malicious code detected."
+          fi
+
+      - name: Set output status
+        run: |
+          if [ $? -eq 0 ]; then
+            echo "status=success" >> $GITHUB_ENV
+          else
+            echo "status=failure" >> $GITHUB_ENV
+          fi
+
+      - name: Display check result
+        run: |
+          if [ "$status" == "success" ]; then
+            echo "✅ No malicious code detected."
+          else
+            echo "❌ Malicious code detected."
+          fi
