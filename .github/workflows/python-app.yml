@@ -35,7 +35,7 @@ jobs:
     - name: Rename and Upload exe as artifact
       run: |
         mv dist/GuessTheNumber dist/GuessTheNumber.exe  # 重命名为 GuessTheNumber.exe
-      - uses: actions/upload-artifact@v4
-        with:
-          name: GuessTheNumber
-          path: dist/GuessTheNumber.exe  # 现在上传重命名后的文件
+    - uses: actions/upload-artifact@v4
+      with:
+        name: GuessTheNumber
+        path: dist/GuessTheNumber.exe  # 上传重命名后的文件
