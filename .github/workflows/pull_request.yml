@@ -1,7 +1,10 @@
-name: Security Check for Malicious Code
+name: Automatic Security Check for Malicious Code
 
 on:
   pull_request:
+    branches:
+      - main
+  push:
     branches:
       - main
 
@@ -32,17 +35,9 @@ jobs:
             echo "No malicious code detected."
           fi
 
-      - name: Set output status
-        run: |
-          if [ $? -eq 0 ]; then
-            echo "status=success" >> $GITHUB_ENV
-          else
-            echo "status=failure" >> $GITHUB_ENV
-          fi
-
       - name: Display check result
         run: |
-          if [ "$status" == "success" ]; then
+          if [ $? -eq 0 ]; then
             echo "✅ No malicious code detected."
           else
             echo "❌ Malicious code detected."
