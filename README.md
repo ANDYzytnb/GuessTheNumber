@@ -12,7 +12,8 @@ ZH_CN | [EN_US](https://github.com/ANDYzytnb/GuessTheNumber/blob/main/README_EN.
 
 **感谢你的理解与支持！让我们共同努力，推动开源精神的发展。**
 
-## 注明信息：
+## 注明信息
+
 1. 建议您使用的游戏版本为 2.0.4 以上以获取最好的支持。
 
 2. 项目在 20240906 开展
@@ -20,3 +21,7 @@ ZH_CN | [EN_US](https://github.com/ANDYzytnb/GuessTheNumber/blob/main/README_EN.
 3. 项目在 20240923 开源
 
 4. 最初启动本项目由于学校的任务，后更新很多，决定将项目改为Public开源项目
+
+## 关于 MacOS
+
+我暂时无法为 MacOS 提供支持，如果您实在想体验，可尝试通过创建一个Fork。在您的Fork下使用Codespaces的Debug功能。
