@@ -18,3 +18,5 @@ Thank you for your interest in and use of this project! As open-source software,
 2. The project started on 2024-09-06.
 
 3. The project was open-sourced on 2024-09-23.
+
+4. Initially, this project was started due to school tasks. After many updates, it was decided to change the project to a public open source project.
