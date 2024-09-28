@@ -18,3 +18,5 @@ Merci de votre intérêt et de votre utilisation de ce projet ! En tant que logi
 2. Le projet a commencé le 2024-09-06.
 
 3. Le projet a été mis en open-source le 2024-09-23.
+
+4. Ce projet a été lancé à l'origine en raison de la mission de l'école. Après de nombreuses mises à jour, nous avons décidé de changer le projet en un projet open source public.
