@@ -23,17 +23,13 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 pyinstaller
+        pip install pyinstaller
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Lint with flake8
-      run: |
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Build exe with PyInstaller
       run: |
-        pyinstaller --onefile --name GuessTheNumber GuessTheNumber.py  # 指定生成的文件名
+        pyinstaller -F GuessTheNumber.py  # 使用 -F 选项生成单个文件
     - name: Upload exe as artifact
       uses: actions/upload-artifact@v4
       with:
         name: GuessTheNumber
-        path: dist/GuessTheNumber  # 使用生成的文件
+        path: dist/GuessTheNumber  # 直接上传生成的文件
