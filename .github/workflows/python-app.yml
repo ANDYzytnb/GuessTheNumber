@@ -32,7 +32,7 @@ jobs:
     - name: Build exe with PyInstaller
       run: |
         pyinstaller --onefile GuessTheNumber.py
-    - name: Upload exe to Releases
+    - name: Upload exe as artifact
       uses: actions/upload-artifact@v3
       with:
         name: GuessTheNumber
