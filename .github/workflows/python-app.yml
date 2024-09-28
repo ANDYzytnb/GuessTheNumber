@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.10
-      uses: actions/setup-python@v4  # 更新到 v4
+      uses: actions/setup-python@v4
       with:
         python-version: "3.10"
     - name: Install dependencies
@@ -32,11 +32,10 @@ jobs:
     - name: Build exe with PyInstaller
       run: |
         pyinstaller --onefile GuessTheNumber.py
-    - name: List files in dist
+    - name: Rename and Upload exe as artifact
       run: |
-        ls -la dist
-    - name: Upload exe as artifact
-      uses: actions/upload-artifact@v4  # 更新到 v4
-      with:
-        name: GuessTheNumber
-        path: dist/GuessTheNumber
+        mv dist/GuessTheNumber dist/GuessTheNumber.exe  # 重命名为 GuessTheNumber.exe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: GuessTheNumber
+          path: dist/GuessTheNumber.exe  # 现在上传重命名后的文件
