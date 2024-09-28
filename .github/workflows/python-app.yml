@@ -32,3 +32,8 @@ jobs:
     - name: Build exe with PyInstaller
       run: |
         pyinstaller --onefile GuessTheNumber.py
+    - name: Upload exe to Releases
+      uses: actions/upload-artifact@v3
+      with:
+        name: GuessTheNumber
+        path: dist/GuessTheNumber.exe  # 替换为生成的 exe 文件名
