@@ -1,6 +1,6 @@
 ZH_CN | [EN_US](https://github.com/ANDYzytnb/GuessTheNumber/blob/main/README_EN.md) | [FR](https://github.com/ANDYzytnb/GuessTheNumber/blob/main/README_FR.md)
 
-### 欢迎您来到由 https://github.com/ANDYzytnb 开发的 GuessTheNumber Game！
+### 欢迎您来到由 https://github.com/ANDYzytnb 开发的猜数字游戏！
 
 ## 使用建议
 
@@ -16,11 +16,11 @@ ZH_CN | [EN_US](https://github.com/ANDYzytnb/GuessTheNumber/blob/main/README_EN.
 
 1. 建议您使用的游戏版本为 2.0.4 以上以获取最好的支持。
 
-2. 项目在 2024-09-06 开展
+2. 项目在 2024-09-06 开展。
 
-3. 项目在 2024-09-23 开源
+3. 项目在 2024-09-23 开源。
 
-4. 最初启动本项目由于学校的任务，后更新很多，决定将项目改为Public开源项目
+4. 最初启动本项目由于学校的任务，后更新很多，决定将项目改为Public开源项目。
 
 ## 关于 MacOS
 
