@@ -18,3 +18,5 @@ ZH_CN | [EN_US](https://github.com/ANDYzytnb/GuessTheNumber/blob/main/README_EN.
 2. 项目在 20240906 开展
 
 3. 项目在 20240923 开源
+
+4. 最初启动本项目由于学校的任务，后更新很多，决定将项目改为Public开源项目
