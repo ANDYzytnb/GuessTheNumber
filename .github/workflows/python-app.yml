@@ -31,11 +31,9 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Build exe with PyInstaller
       run: |
-        pyinstaller --onefile GuessTheNumber.py
-    - name: Rename and Upload exe as artifact
-      run: |
-        mv dist/GuessTheNumber dist/GuessTheNumber.exe  # 重命名为 GuessTheNumber.exe
-    - uses: actions/upload-artifact@v4
+        pyinstaller --onefile --name GuessTheNumber GuessTheNumber.py  # 指定生成的文件名
+    - name: Upload exe as artifact
+      uses: actions/upload-artifact@v4
       with:
         name: GuessTheNumber
-        path: dist/GuessTheNumber.exe  # 上传重命名后的文件
+        path: dist/GuessTheNumber  # 使用生成的文件
