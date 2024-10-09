@@ -40,16 +40,7 @@ body:
       id: screenshots
       attributes:
           label: 截图
-          description: 如果有相关截图的话，请上传截图。[截图教程](https://zhuanlan.zhihu.com/p/92074446)
+          description: 如果有相关截图的话，请上传截图。
           placeholder: 请把截图粘贴到这里
     - type: dropdown
       id: dropdown
-      attributes:
-          label: "前端 / 后端"
-          description: 需要增加新功能的是 客户端 / 服务端？
-          multiple: false
-          options:
-              - 前端
-              - 后端
-      validations:
-          required: true
