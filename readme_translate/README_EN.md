@@ -1,4 +1,4 @@
-[ZH_CN](https://github.com/ANDYzytnb/GuessTheNumber/blob/main/README.md) | EN_US | [FR](https://github.com/ANDYzytnb/GuessTheNumber/blob/main/README_FR.md)
+[ZH_CN](https://github.com/ANDYzytnb/GuessTheNumber/blob/main/README.md) | EN_US | [FR](https://github.com/ANDYzytnb/GuessTheNumber/blob/main/readme_translate/README_FR.md)
 
 ### Welcome to the GuessTheNumber Game developed by [ANDYzytnb](https://github.com/ANDYzytnb)!
 
