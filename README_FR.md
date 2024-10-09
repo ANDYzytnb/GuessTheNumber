@@ -22,6 +22,8 @@ Merci de votre intérêt et de votre utilisation de ce projet ! En tant que logi
 
 4. Ce projet a été lancé à l'origine en raison de la mission de l'école. Après de nombreuses mises à jour, nous avons décidé de changer le projet en un projet open source public.
 
+5. Le code source initial contenait des jetons GitHub, qui ont été invalidés et ne présentent aucun risque de sécurité.
+
 ## À propos de MacOS
 
 Je ne peux pas fournir de support pour MacOS pour le moment. Si vous voulez vraiment l'essayer, vous pouvez essayer de créer un fork. Utilisez la fonction Debug de Codespaces dans votre fork.
