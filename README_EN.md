@@ -22,6 +22,8 @@ Thank you for your interest in and use of this project! As open-source software,
 
 4. Initially, this project was started due to school tasks. After many updates, it was decided to change the project to a public open source project.
 
+5. The early source code contained GitHub Tokens, which have been invalidated and do not pose any security risks.
+
 ## About MacOS
 
 I can't provide support for MacOS for now. If you really want to try it, you can try to create a fork. Use the Debug feature of Codespaces in your fork.
