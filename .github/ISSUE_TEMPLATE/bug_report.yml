@@ -1,6 +1,6 @@
 name: "反馈Bug"
-description: 在这里反馈你遇到的Bug
-title: "📄[Bug Report] 请输入标题"
+description: 在这里反馈你遇到的Bug / Report bugs here
+title: "📄[Bug Report] 请输入标题 / Enter the title"
 labels: ["bug"]
 body:
   - type: checkboxes
@@ -19,7 +19,7 @@ body:
     attributes:
       label: "描述问题 / Describe the Issue"
       description: "请简单描述您遇到的问题 / Please provide a brief description of the problem you encountered."
-      placeholder: "问题描述…… / Problem description..."
+      placeholder: "问题描述 / Problem description"
       render: bash
     validations:
       required: true
@@ -43,6 +43,6 @@ body:
     id: screenshots
     attributes:
       label: "截图 / Screenshots"
-      description: "如果有相关截图的话，请上传截图。/ If applicable, please attach any screenshots that explain the issue. [截图教程 / Screenshot guide](https://zhuanlan.zhihu.com/p/92074446)"
+      description: "如果有相关截图的话，请上传截图。/ If applicable, please attach any screenshots that explain the issue."
       placeholder: "请把截图粘贴到这里 / Paste screenshots here"
     
