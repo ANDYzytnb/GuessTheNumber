@@ -1,6 +1,6 @@
 [ZH_CN](https://github.com/ANDYzytnb/GuessTheNumber/blob/main/README.md) | [EN_US](https://github.com/ANDYzytnb/GuessTheNumber/blob/main/README_EN.md) | FR
 
-### Bienvenue dans le jeu GuessTheNumber développé par https://github.com/ANDYzytnb !
+### Bienvenue dans le jeu GuessTheNumber développé par [ANDYzytnb](https://github.com/ANDYzytnb)!
 
 ## Recommandations d'utilisation
 
