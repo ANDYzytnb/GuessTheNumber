@@ -10,9 +10,9 @@ body:
       description: "请逐个检查下列项目，并勾选确认。/ Please go through the checklist below and confirm."
       options:
         - label: "我确认有此Bug并知道如何复现 / I confirm this bug exists and know how to reproduce it."
-          required: true
+          required: false
         - label: "我确认有此Bug但不知如何复现 / I confirm this bug exists but do not know how to reproduce it."
-          required: true
+          required: false
 
   - type: textarea
     id: description
