@@ -3,44 +3,46 @@ description: 在这里反馈你遇到的Bug
 title: "📄[Bug Report] 请输入标题"
 labels: ["bug"]
 body:
-    - type: checkboxes
-      id: check-list
-      attributes:
-          label: "检查项"
-          description: "请逐个检查下列项目，并勾选确认。"
-          options:
-              - label: "我确认有此Bug并知道如何复现"
-                required: true
-              - label: "我确认有此Bug但不知如何复现"
-                required: true
-    - type: textarea
-      id: description
-      attributes:
-          label: "描述问题"
-          description: 请简单描述您遇到的问题
-          placeholder: 问题描述……
-          render: bash
-      validations:
+  - type: checkboxes
+    id: check-list
+    attributes:
+      label: "检查项 / Checklist"
+      description: "请逐个检查下列项目，并勾选确认。/ Please go through the checklist below and confirm."
+      options:
+        - label: "我确认有此Bug并知道如何复现 / I confirm this bug exists and know how to reproduce it."
           required: true
-    - type: textarea
-      id: reprod
-      attributes:
-          label: "如何复现你的遇到的问题？"
-          description: 请详细描述如何复现你遇到的问题
-          value: |
-              1. 
-              2. 
-              3. 
-              4. 
-              5. 问题复现
-          render: bash
-      validations:
+        - label: "我确认有此Bug但不知如何复现 / I confirm this bug exists but do not know how to reproduce it."
           required: true
-    - type: textarea
-      id: screenshots
-      attributes:
-          label: 截图
-          description: 如果有相关截图的话，请上传截图。
-          placeholder: 请把截图粘贴到这里
-    - type: dropdown
-      id: dropdown
+
+  - type: textarea
+    id: description
+    attributes:
+      label: "描述问题 / Describe the Issue"
+      description: "请简单描述您遇到的问题 / Please provide a brief description of the problem you encountered."
+      placeholder: "问题描述…… / Problem description..."
+      render: bash
+    validations:
+      required: true
+
+  - type: textarea
+    id: reprod
+    attributes:
+      label: "如何复现你的遇到的问题？ / Steps to Reproduce the Issue"
+      description: "请详细描述如何复现你遇到的问题 / Please describe in detail how to reproduce the problem."
+      value: |
+        1. 
+        2. 
+        3. 
+        4. 
+        5. 问题复现 / Problem reproduced
+      render: bash
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: "截图 / Screenshots"
+      description: "如果有相关截图的话，请上传截图。/ If applicable, please attach any screenshots that explain the issue. [截图教程 / Screenshot guide](https://zhuanlan.zhihu.com/p/92074446)"
+      placeholder: "请把截图粘贴到这里 / Paste screenshots here"
+    
