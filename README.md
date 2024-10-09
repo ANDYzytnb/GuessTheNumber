@@ -22,6 +22,8 @@ ZH_CN | [EN_US](https://github.com/ANDYzytnb/GuessTheNumber/blob/main/README_EN.
 
 4. 最初启动本项目由于学校的任务，后更新很多，决定将项目改为Public开源项目。
 
+5. 在早期的源代码里包含GitHub Token，这些Token都已作废，不会有任何安全风险。
+
 ## 关于 MacOS
 
 我暂时无法为 MacOS 提供支持，如果您实在想体验，可尝试通过创建一个Fork。在您的Fork下使用Codespaces的Debug功能。
