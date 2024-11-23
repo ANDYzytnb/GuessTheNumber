@@ -2,6 +2,8 @@
 
 ### Welcome to the GuessTheNumber Game developed by [ANDYzytnb](https://github.com/ANDYzytnb)!
 
+### Temporarily stop updating! Since this project was originally a school class assignment, the class has been completely finished. And there is nothing to update anymore. If you have any features you want to add, you can post them on [Issue Pages](https://github.com/ANDYzytnb/GuessTheNumber/issues)
+
 ## Usage Recommendations
 
 Thank you for your interest in and use of this project! As open-source software, it aims to promote knowledge sharing and collaboration, so we hope everyone can freely use, modify, and distribute this software. However, we would like to emphasize the following points:

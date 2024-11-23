@@ -2,6 +2,8 @@ ZH_CN | [EN_US](https://github.com/ANDYzytnb/GuessTheNumber/blob/main/readme_tra
 
 ### 欢迎您来到由 [ANDYzytnb](https://github.com/ANDYzytnb) 开发的猜数字游戏！
 
+### 暂时停更！由于本项目最初源于学校课堂任务，课时已经完全结束。并且没有什么可以再更新的地方了，如果您还有想添加的功能可以在 [Issue Pages](https://github.com/ANDYzytnb/GuessTheNumber/issues)
+
 ## 使用建议
 
 感谢你对本项目的关注和使用！作为开源软件，旨在促进知识共享与合作，因此我们希望大家能够自由使用、修改和分发这款软件。然而，我们也希望强调以下几点：

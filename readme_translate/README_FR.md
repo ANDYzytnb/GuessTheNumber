@@ -2,6 +2,8 @@
 
 ### Bienvenue dans le jeu GuessTheNumber développé par [ANDYzytnb](https://github.com/ANDYzytnb)!
 
+### Mises à jour temporairement suspendues ! Étant donné que ce projet est né d’un devoir en classe, la période de cours est complètement terminée. Et il n'y a rien à mettre à jour. Si vous souhaitez toujours ajouter des fonctionnalités, vous pouvez le faire dans les [Pages des problèmes](https://github.com/ANDYzytnb/GuessTheNumber/issues).
+
 ## Recommandations d'utilisation
 
 Merci de votre intérêt et de votre utilisation de ce projet ! En tant que logiciel open-source, il vise à promouvoir le partage des connaissances et la collaboration, nous espérons donc que chacun pourra utiliser, modifier et distribuer ce logiciel librement. Cependant, nous aimerions souligner les points suivants :
