@@ -8,7 +8,7 @@ import os
 public_repo_api_url = "https://api.github.com/repos/ANDYzytnb/GuessTheNumber/releases/latest"
 public_repo_base_url = "https://github.com/ANDYzytnb/GuessTheNumber/releases/download"
 announcement_url = "https://raw.githubusercontent.com/ANDYzytnb/GuessTheNumber/main/announcement.txt"
-current_version = "v2.0.5"
+current_version = "v2.0.6"
 
 # 开发者模式密码
 dev_mode_password = "devmodepwd"
@@ -171,18 +171,20 @@ def select_difficulty():
             elif choice == 5:
                 return 0, 10000, False, None, True
             elif choice == 9:
-                password = input("请输入开发者密码：")
-                if password == dev_mode_password:
-                    print("密码正确，进入开发者模式。")
-                    min_range, max_range = custom_range()
-                    number_to_guess = random.randint(min_range, max_range)
-                    print(f"当前版本：{current_version}")
-                    print(f"OTA 请求 URL：{public_repo_api_url}")
-                    print(f"开发者模式提示：正确的数字是 {number_to_guess}")
-                    return min_range, max_range, True, number_to_guess, False
-                else:
-                    print("密码错误，回到普通模式。")
-                    return (0, 0, False, None, False)
+                # 开发者模式密码验证
+                while True:
+                    password = input("请输入开发者密码：")
+                    if password == dev_mode_password:
+                        print("密码正确，进入开发者模式。")
+                        min_range, max_range = custom_range()
+                        number_to_guess = random.randint(min_range, max_range)
+                        print(f"当前版本：{current_version}")
+                        print(f"OTA 请求 URL：{public_repo_api_url}")
+                        print(f"开发者模式提示：正确的数字是 {number_to_guess}")
+                        return min_range, max_range, True, number_to_guess, False
+                    else:
+                        print("密码错误，请重新输入。")
+                        continue  # 密码错误，继续让用户输入
             else:
                 print("请输入有效的数字 (1-5)！")
         except ValueError:
